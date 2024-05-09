@@ -8,26 +8,28 @@ import {
 import "leaflet/dist/leaflet.css";
 import "./Leaf.css";
 import { Icon } from "leaflet";
-import { useState } from "react";
+import useLocalStorage from "../../useLocalStorage";
 
 function LocationMarker() {
   const customIcon = new Icon({
     iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
     iconSize: [38, 38],
   });
-  const [position, setPosition] = useState(null);
+  const [position, setPosition] = useLocalStorage('position', null);
   const map = useMapEvents({
     click: (e: any) => {
       map.locate();
       // map.flyTo(e.latlng, map.getZoom());
       setPosition(e.latlng);
-    }
+    },
   });
 
-  return position === null ? null : (
-    <Marker position={position} icon={customIcon}>
-      <Popup>You are here</Popup>
-    </Marker>
+  return (
+    position && (
+      <Marker position={position} icon={customIcon}>
+        <Popup>You are here: {JSON.stringify(position)}</Popup>
+      </Marker>
+    )
   );
 }
 
