@@ -1,10 +1,11 @@
 import "./App.css";
-import Leaf from "./components/leaf/Leaf";
+import Geolocation from "./components/geolocation/Geolocation";
 
 function App() {
   return (
     <div className="App">
-      <Leaf />
+      {/* <Leaf /> */}
+      <Geolocation />
     </div>
   );
 }
