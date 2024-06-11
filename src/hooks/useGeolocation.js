@@ -1,21 +1,18 @@
 import { useState } from "react";
 
 export const useGeolocation = () => {
-  const [locationInfo, setLocationInfo] = useState(null);
-  const [locationError, setLocationError] = useState(null);
+  const [coords, setCoords] = useState(null);
+  const [error, setError] = useState(null);
   const { geolocation } = navigator;
 
-  const successFn = (res) => {
-    setLocationInfo(res.coords);
-  };
-
-  const errorFn = (res) => {
-    setLocationError(res.message);
-  };
-
-  if (!locationError && !locationInfo) {
-    geolocation.getCurrentPosition(successFn, errorFn);
+  if (!error && !coords) {
+    geolocation.getCurrentPosition(
+      (res) => {
+        setCoords(res.coords);
+      }, (res) => {
+        setError(res.message);
+      });
   }
 
-  return { locationError, locationInfo };
+  return { error, coords };
 };
